@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-const String token = '5a57573b8db449dfa37741d867843afe';
+const String token = "5a57573b8db449dfa37741d867843afe";
 
 // Future<List<match>> getMatches(String code) async {
 //   Response result = await get(
@@ -17,7 +17,8 @@ class API_Manger{
     var client = http.Client();
     var matchModel = null;
     var response = await client.get(Uri.parse(Links.base_url),
-    headers: {"X-Auth-Token": token});
+    headers: {"X-Auth-Token": Links.token});
+    print(response);
       if(response.statusCode == 200){
         var jsonString = response.body;
         var jsonMap = json.decode(jsonString);

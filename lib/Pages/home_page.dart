@@ -10,14 +10,15 @@ class MatchList extends StatefulWidget {
   const MatchList({Key? key}) : super(key: key);
 
   @override
-  MatchListState createState() => MatchListState();
+  _MatchListState createState() => _MatchListState();
+
 }
 
-class MatchListState extends State<MatchList> {
-  late Future<Match> _matchModel;
+class _MatchListState extends State<MatchList> {
+
+
   @override
   void initstate(){
-    _matchModel = API_Manger().getMatch();
     super.initState();
   }
 
@@ -25,8 +26,8 @@ class MatchListState extends State<MatchList> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.lightGreen,
-        child:FutureBuilder<Match >(
-                  future: _matchModel,
+        child:FutureBuilder<Match>(
+                  future: API_Manger().getMatch(),
                   builder: ( context, snapshot) {
       if (snapshot.data == null) {
               return Center(
@@ -88,6 +89,7 @@ class MatchListState extends State<MatchList> {
                                   fit: BoxFit.fitWidth),
                             ],
                           ))
+
                     ],
                   ),
                 ),
@@ -102,6 +104,7 @@ class MatchListState extends State<MatchList> {
        // )
     );
   }
+
 }
 
 
