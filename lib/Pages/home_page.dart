@@ -70,14 +70,14 @@ void initstate(){
             physics: BouncingScrollPhysics(),
             padding: EdgeInsets.all(5),
             itemBuilder: (context, i) {
-              var matches = snapshot.data?.matches[i];
+              MatchElement matches = snapshot.data?.matches[i] as MatchElement;
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: (){
                     Navigator.of(context).push(
                         MaterialPageRoute(
-                        builder: (builder) => Scorecard()));
+                        builder: (builder) => Scorecard(matches:matches)));
 
                   },
                   child: Container(
@@ -96,7 +96,7 @@ void initstate(){
                           //crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             FittedBox(
-                                child: Text(matches!.homeTeam.name,
+                                child: Text(matches.homeTeam.name,
                                     style: teamStyle),
                                 fit: BoxFit.fitWidth),
                             Padding(

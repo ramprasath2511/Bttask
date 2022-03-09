@@ -1,13 +1,15 @@
 
+import 'package:bttask/Model/match.dart';
 import 'package:flutter/material.dart';
 
 class TeamLogoName extends StatelessWidget {
 
   final double width;
 
+final Team team;
+final String teamtype;
 
-
-  TeamLogoName(this.width);
+  TeamLogoName(this.width, this.team, this.teamtype);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class TeamLogoName extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-           "Home or Away",
+           teamtype,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
@@ -28,10 +30,11 @@ class TeamLogoName extends StatelessWidget {
           Icon(Icons.camera),
           SizedBox(height: 16),
           Text(
-            "teamname",
+               team.name,
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
+          SizedBox(height: 16),
         ],
       ),
     );

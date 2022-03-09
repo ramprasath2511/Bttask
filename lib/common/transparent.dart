@@ -13,8 +13,8 @@ class TransparentBackground extends StatelessWidget {
         Center(
           child: Container(
             padding: const EdgeInsets.all(16),
-            height: _size.width * 0.7,
-            child: SvgPicture.asset("assets/Images/footbg.png"),
+            height: _size.width * 0.6,
+            child: Image.asset("Images/footbg.png"),
           ),
         ),
         Positioned(
