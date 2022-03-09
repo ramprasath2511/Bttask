@@ -76,7 +76,7 @@ class _ScorecardState extends State<Scorecard> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  widget.matches.score.fullTime.homeTeam ?? "0".toString(),
+                                  widget.matches.score.fullTime.homeTeam.toString(),
                                   style: TextStyle(
                                       fontSize: 50,
                                       color: Colors.white),
@@ -88,7 +88,7 @@ class _ScorecardState extends State<Scorecard> {
                                       color: Colors.white),
                                 ),
                                 Text(
-                                  widget.matches.score.fullTime.awayTeam?? "0".toString(),
+                                  widget.matches.score.fullTime.awayTeam.toString(),
                                   style: TextStyle(
                                       fontSize: 50,
                                       color: Colors.white),
@@ -120,7 +120,7 @@ class _ScorecardState extends State<Scorecard> {
                         child: Row(
                           children: [
                             Text(
-                              widget.matches.score.halfTime.homeTeam ?? "0".toString(),style: TextStyle(
+                              widget.matches.score.halfTime.homeTeam.toString(),style: TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
@@ -132,7 +132,7 @@ class _ScorecardState extends State<Scorecard> {
                               ),
                             ),
                             Text(
-                                widget.matches.score.halfTime.awayTeam ?? "0".toString(),style: TextStyle(
+                                widget.matches.score.halfTime.awayTeam.toString(),style: TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
@@ -150,7 +150,7 @@ class _ScorecardState extends State<Scorecard> {
                         child: Row(
                           children: [
                             Text(
-                                widget.matches.score.extraTime.homeTeam ?? "0".toString(),style: TextStyle(
+                                widget.matches.score.extraTime.homeTeam ?? "0",style: TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
@@ -162,7 +162,7 @@ class _ScorecardState extends State<Scorecard> {
                               ),
                             ),
                             Text(
-                                widget.matches.score.extraTime.awayTeam ?? "0".toString(),style: TextStyle(
+                                widget.matches.score.extraTime.awayTeam ?? "0",style: TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
@@ -180,7 +180,7 @@ class _ScorecardState extends State<Scorecard> {
                         child: Row(
                           children: [
                             Text(
-                                widget.matches.score.penalties.homeTeam ?? "0".toString(),style: TextStyle(
+                                widget.matches.score.penalties.homeTeam ?? "0",style: TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
@@ -192,7 +192,7 @@ class _ScorecardState extends State<Scorecard> {
                               ),
                             ),
                             Text(
-                                widget.matches.score.penalties.awayTeam ?? "0".toString(),style: TextStyle(
+                                widget.matches.score.penalties.awayTeam ?? "0",style: TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),

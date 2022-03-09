@@ -27,7 +27,7 @@ final String teamtype;
             ),
           ),
           SizedBox(height: 16),
-          Icon(Icons.camera),
+          Image.asset("Images/teamgame.gif"),
           SizedBox(height: 16),
           Text(
                team.name,

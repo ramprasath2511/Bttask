@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'Pages/home_page.dart';
+import 'Pages/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -77,12 +78,12 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
         centerTitle: true,
-        backgroundColor: Colors.green,
+        backgroundColor: Color(0xFF6E62FF),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: MatchList(),
+        child: MatchListScreen(),//MatchList(),
 
       ),
       // This trailing comma makes auto-formatting nicer for build methods.

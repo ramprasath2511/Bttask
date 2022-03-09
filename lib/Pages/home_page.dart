@@ -1,4 +1,5 @@
 import 'package:bttask/Api/api_manager.dart';
+import 'package:bttask/Bloc/match_bloc.dart';
 import 'package:bttask/Model/match.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -20,8 +21,11 @@ class MatchList extends StatefulWidget {
 
 class _MatchListState extends State<MatchList> {
 
+/*
  RefreshController refreshController = RefreshController(initialRefresh: false);
-
+*/
+final bloc = MatchBloc();
+/*
 void _onRefresh() async{
   // monitor network fetch
   await Future.delayed(Duration(milliseconds: 1000));
@@ -38,39 +42,38 @@ void _onLoading() async{
 
     });
   refreshController.loadComplete();
-}
-@override
-void initstate(){
-  refreshController = RefreshController();
+}*/
+  @override
+  void initState(){
+  //refreshController = RefreshController();
+  bloc.eventSink.add(Operations.fetch);
   super.initState();
 }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SmartRefresher(
+      body: /*SmartRefresher(
         enablePullDown: true,
         enablePullUp: true,
         header: WaterDropHeader(),
-        controller: refreshController,
-        onRefresh: _onRefresh,
-        onLoading: _onLoading,
-        child:Container(
+        // controller: refreshController,
+        // onRefresh: _onRefresh,
+        // onLoading: _onLoading,
+        child:*/Container(
       color: Colors.lightGreen,
-        child:FutureBuilder<Match>(
-                  future: API_Manger().getMatch(),
-                  builder: ( context, snapshot) {
-      if (snapshot.data == null) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
+        child:StreamBuilder<List<MatchElement>>(
+                  stream: bloc.counterStream,
+                  builder: (context, snapshot) {
+
+
+             if(snapshot.hasData){
         return ListView.builder(
-            itemCount: snapshot.data?.matches.length,
+            itemCount: snapshot.data?.length,
             physics: BouncingScrollPhysics(),
             padding: EdgeInsets.all(5),
             itemBuilder: (context, i) {
-              MatchElement matches = snapshot.data?.matches[i] as MatchElement;
+              MatchElement matches = snapshot.data![i] as MatchElement;
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
@@ -120,7 +123,7 @@ void initstate(){
                           child: Column(
                             children: <Widget>[
                               FittedBox(
-                                  child: Text(matches.score.fullTime.homeTeam??"0".toString()),
+                                  child: Text(matches.score.fullTime.homeTeam.toString()),
                                   fit: BoxFit.fitWidth),
                               FittedBox(
                                   child: Text("23-12-2021"),
@@ -135,13 +138,16 @@ void initstate(){
               );
             }
         );
-      }}
+      }else {
+               return const Center(child: CircularProgressIndicator());
+             }
+                  }
 
                    ),
             //}
          // },
        ),
-      ),
+
     );
   }
 
