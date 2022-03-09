@@ -5,6 +5,10 @@ import 'package:flutter/rendering.dart';
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import 'detailed_page.dart';
+
 
 class MatchList extends StatefulWidget {
   const MatchList({Key? key}) : super(key: key);
@@ -16,15 +20,42 @@ class MatchList extends StatefulWidget {
 
 class _MatchListState extends State<MatchList> {
 
+ RefreshController refreshController = RefreshController(initialRefresh: false);
 
-  @override
-  void initstate(){
-    super.initState();
-  }
+void _onRefresh() async{
+  // monitor network fetch
+  await Future.delayed(Duration(milliseconds: 1000));
+  // if failed,use refreshFailed()
+  refreshController.refreshCompleted();
+}
+void _onLoading() async{
+  // monitor network fetch
+  await Future.delayed(Duration(milliseconds: 1000));
+  // if failed,use loadFailed(),if no data return,use LoadNodata()
+  API_Manger().getMatch();
+  if(mounted)
+    setState(() {
+
+    });
+  refreshController.loadComplete();
+}
+@override
+void initstate(){
+  refreshController = RefreshController();
+  super.initState();
+}
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+      body: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+        header: WaterDropHeader(),
+        controller: refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        child:Container(
       color: Colors.lightGreen,
         child:FutureBuilder<Match>(
                   future: API_Manger().getMatch(),
@@ -42,7 +73,14 @@ class _MatchListState extends State<MatchList> {
               var matches = snapshot.data?.matches[i];
               return Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(
+                child: InkWell(
+                  onTap: (){
+                    Navigator.of(context).push(
+                        MaterialPageRoute(
+                        builder: (builder) => Scorecard()));
+
+                  },
+                  child: Container(
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                   decoration: BoxDecoration(
                       color: Colors.white60,
@@ -80,9 +118,9 @@ class _MatchListState extends State<MatchList> {
                       //second part of match details
                       Expanded(
                           child: Column(
-                            children: const <Widget>[
+                            children: <Widget>[
                               FittedBox(
-                                  child: Text("12:30"),
+                                  child: Text(matches.score.fullTime.homeTeam??"0".toString()),
                                   fit: BoxFit.fitWidth),
                               FittedBox(
                                   child: Text("23-12-2021"),
@@ -93,6 +131,7 @@ class _MatchListState extends State<MatchList> {
                     ],
                   ),
                 ),
+                )
               );
             }
         );
@@ -101,7 +140,8 @@ class _MatchListState extends State<MatchList> {
                    ),
             //}
          // },
-       // )
+       ),
+      ),
     );
   }
 

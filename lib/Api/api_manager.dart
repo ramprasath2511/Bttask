@@ -13,7 +13,7 @@ const String token = "5a57573b8db449dfa37741d867843afe";
 
 
 class API_Manger{
-  Future<Match> getMatch() async {
+  Future<Match> getMatch({bool isRefresh = false}) async {
     var client = http.Client();
     var matchModel = null;
     var response = await client.get(Uri.parse(Links.base_url),
