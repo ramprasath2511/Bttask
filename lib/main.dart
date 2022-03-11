@@ -11,7 +11,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
    MyApp({Key? key}) : super(key: key);
-Game _match = new Game(filters: Filters(permission: "TIER_ONE", dateFrom: DateFormat("yyyy-MM-dd").parse("2022-03-10"), dateTo: DateFormat("yyyy-MM-dd").parse("2022-03-20")), matches: [], count: 2);
+Game _match = new Game(filters: Filters(permission: "TIER_ONE", dateFrom: DateFormat("yyyy-MM-dd").parse("2022-03-10"), dateTo: DateFormat("yyyy-MM-dd").parse("2022-03-20")), matches: [], count: 0);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -43,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         centerTitle: true,
         backgroundColor: const Color(0xFF6E62FF),
+
       ),
       body: const Center(
         child: MatchListScreen(), //MatchList(),

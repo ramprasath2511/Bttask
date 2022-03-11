@@ -20,7 +20,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
 
   @override
   void initState() {
-    BlocProvider.of<MatchesBloc>(context).add(Fetch());
+    BlocProvider.of<MatchesBloc>(context).add(Fetch("current"));
     super.initState();
   }
 
@@ -46,6 +46,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
                   width: double.infinity,
                   child: Stack(
                     children: [
+
                       Container(
                         width: double.infinity,
                         height: double.infinity,
@@ -70,21 +71,84 @@ class _MatchListScreenState extends State<MatchListScreen> {
                           ),),
                         ),
                       ),
+
+                     Positioned(height: 270,left: 25,
+                       child: Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                         crossAxisAlignment: CrossAxisAlignment.center,
+                         children: [
+    InkWell(
+      onTap: (){
+        BlocProvider.of<MatchesBloc>(context).add(Fetch("past"));
+      },
+    child :Container(
+                             padding: const EdgeInsets.symmetric(
+                               horizontal: 8,
+                               vertical: 8,
+                             ),
+                             decoration: BoxDecoration(
+                               color: Colors.transparent,
+                               border: Border.all(color: Colors.white),
+                               borderRadius: const BorderRadius.all(
+                                 Radius.circular(12),
+                               ),
+                             ),
+                             child: Text(
+                               "<-- Past Matches",
+                               style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                             ),
+                           ),
+    ),
+
+                         ]
+                     ),),
+                      Positioned(height: 270,right: 25,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                onTap: (){
+                                  BlocProvider.of<MatchesBloc>(context).add(Fetch("future"));
+                                },
+                              child :Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.transparent,
+                                  border: Border.all(color: Colors.white),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(12),
+                                  ),
+                                ),
+                                child: Text(
+                                  "Future Matches -->",
+                                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              ),
+                            ]
+                        ),),
+
+
                    ],
                   ),
                 ),
               ),
+
               Expanded(
                 child: BlocBuilder<MatchesBloc, MatchesState>(
                     builder: (context, state) {
-                      if (state.matchElements!=null) {
+                      if (state.matchElements.matches.length>0) {
 
                         return ListView.builder(
                           itemCount: state.matchElements.matches.length,
                           itemBuilder: (context, i) {
                             MatchElement matches = state.matchElements.matches[i];
-                           String? homeScore= matches.score.fullTime.homeTeam ?? "0";
-                            String? awayScore= matches.score.fullTime.awayTeam ?? "0";
+                           String homeScore= matches.score.fullTime.homeTeam?.toString() ?? "0" ;
+                            String awayScore= matches.score.fullTime.awayTeam?.toString() ??"0" ;
 
                             return InkWell(
                               key: const Key("lists"),
@@ -130,7 +194,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                               ),
                                             ),
                                             child:Text(
-                                             "Live",
+                                             "Home",
                                               textAlign: TextAlign.center,
                                               style: const TextStyle(
                                                 color: Colors.white,
@@ -194,6 +258,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                     Expanded(
                                       child: Text(
                                         matches.homeTeam.name,
+                                        maxLines: 1,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                           color: Colors.white,
@@ -218,7 +283,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                         child: Column(
                                           children: [
                                             Text(
-                                              homeScore! +" - "+ awayScore!,
+                                              homeScore +" - "+ awayScore,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                           color: Colors.white,
@@ -226,32 +291,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-// SizedBox(
-//   height: 3,
-// ),
-//
-//                                         Container(
-//                                             padding: const EdgeInsets.symmetric(
-//                                               horizontal: 3,
-//                                               vertical: 1,
-//                                             ),
-//                                             decoration: BoxDecoration(
-//                                               color: Colors.red,
-//                                               border: Border.all(color: Colors.red),
-//                                               borderRadius: const BorderRadius.all(
-//                                                 Radius.circular(3),
-//                                               ),
-//                                             ),
-//                                             child:Text(
-//                                              "Live",
-//                                               textAlign: TextAlign.center,
-//                                               style: const TextStyle(
-//                                                 color: Colors.white,
-//                                                 fontSize: 14,
-//                                                 fontWeight: FontWeight.w400,
-//                                               ),
-//                                             ),
-//                                         ),
+
                                       ]
                                         )
                                     ),
@@ -259,6 +299,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                     Expanded(
                                       child: Text(
                                         matches.awayTeam.name,
+                                        maxLines: 1,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                           color: Colors.white,

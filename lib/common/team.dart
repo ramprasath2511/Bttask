@@ -40,6 +40,7 @@ final String teamtype;
           SizedBox(height: 12),
           Text(
                team.name,
+            maxLines: 2,
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),

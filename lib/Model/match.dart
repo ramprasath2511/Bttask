@@ -67,7 +67,6 @@ class MatchElement {
     required this.stage,
     this.group,
     required this.lastUpdated,
-    required this.odds,
     required this.score,
     required this.homeTeam,
     required this.awayTeam,
@@ -83,7 +82,6 @@ class MatchElement {
   String stage;
   dynamic group;
   DateTime lastUpdated;
-  Odds odds;
   Score score;
   Team homeTeam;
   Team awayTeam;
@@ -99,7 +97,6 @@ class MatchElement {
     stage: json["stage"],
     group: json["group"],
     lastUpdated: DateTime.parse(json["lastUpdated"]),
-    odds: Odds.fromJson(json["odds"]),
     score: Score.fromJson(json["score"]),
     homeTeam: Team.fromJson(json["homeTeam"]),
     awayTeam: Team.fromJson(json["awayTeam"]),
@@ -116,7 +113,6 @@ class MatchElement {
     "stage": stage,
     "group": group,
     "lastUpdated": lastUpdated.toIso8601String(),
-    "odds": odds.toJson(),
     "score": score.toJson(),
     "homeTeam": homeTeam.toJson(),
     "awayTeam": awayTeam.toJson(),
@@ -148,65 +144,23 @@ class Competition {
   Competition({
     required this.id,
     required this.name,
-    required this.area,
   });
 
   int id;
   String name;
-  Area area;
 
   factory Competition.fromJson(Map<String, dynamic> json) => Competition(
     id: json["id"],
     name: json["name"],
-    area: Area.fromJson(json["area"]),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "name": name,
-    "area": area.toJson(),
   };
 }
 
-class Area {
-  Area({
-    required this.name,
-    required this.code,
-    required this.ensignUrl,
-  });
 
-  String name;
-  String code;
-  String ensignUrl;
-
-  factory Area.fromJson(Map<String, dynamic> json) => Area(
-    name: json["name"],
-    code: json["code"],
-    ensignUrl: json["ensignUrl"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "name": name,
-    "code": code,
-    "ensignUrl": ensignUrl,
-  };
-}
-
-class Odds {
-  Odds({
-    required this.msg,
-  });
-
-  String msg;
-
-  factory Odds.fromJson(Map<String, dynamic> json) => Odds(
-    msg: json["msg"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "msg": msg,
-  };
-}
 
 
 

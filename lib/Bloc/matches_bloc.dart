@@ -9,13 +9,19 @@ part 'matches_event.dart';
 part 'matches_state.dart';
 
 class MatchesBloc extends Bloc<MatchesEvent, MatchesState> {
+ Game? matches;
+
   MatchesBloc(MatchesState initialState) : super(initialState);
-  //MatchesState get initialState => MatchesState(matchElements: []);
+
+  @override
+  MatchesState get initialState => MatchesState(matchElements: matches!);
 
   Stream<MatchesState> mapEventToState(MatchesEvent event,)async*{
     if(event is Fetch){
-      var matches = await API_Manger().getMatch();
-      yield MatchesState(matchElements:matches);
+      print("fetxh");
+      print(event.dateType);
+       matches = await API_Manger().getMatch(event.dateType);
+      yield MatchesState(matchElements:matches!);
 
     }
   }
