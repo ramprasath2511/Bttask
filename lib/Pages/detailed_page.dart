@@ -1,12 +1,12 @@
 import 'package:bttask/Model/match.dart';
-import 'package:bttask/common/team.dart';
-import 'package:bttask/common/backgroundscreen.dart';
+import 'package:bttask/utils/team.dart';
+import 'package:bttask/utils/background_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Scorecard extends StatefulWidget {
 
-  final MatchElement matches;
+  final MatchElement? matches;
 
   const Scorecard({Key? key, required this.matches}) : super(key: key);
   @override
@@ -18,22 +18,27 @@ class _ScorecardState extends State<Scorecard> {
 
   @override
   Widget build(BuildContext context) {
-    final _size = MediaQuery.of(context).size;
-    String winner = widget.matches.score.winner?.toString() ?? "-";
-    String homeScore =widget.matches.score.fullTime.homeTeam?.toString() ?? "0";
-    String awayScore = widget.matches.score.fullTime.awayTeam?.toString() ?? "0";
-    String h_halfScore = widget.matches.score.halfTime.homeTeam?.toString()?? "0";
-    String a_halfScore = widget.matches.score.halfTime.awayTeam?.toString()?? "0";
-    String h_extraScore = widget.matches.score.extraTime.homeTeam?.toString()?? "0";
-    String a_extraScore = widget.matches.score.extraTime.awayTeam?.toString()?? "0";
-    String h_penalities = widget.matches.score.penalties.homeTeam?.toString()?? "0";
-    String a_penalities = widget.matches.score.penalties.awayTeam?.toString()?? "0";
 
+    final _size = MediaQuery.of(context).size;
+    Score? score = widget.matches?.score;
+    String winner = score?.winner?.toString() ?? "-";
+    String homeScore =score?.fullTime.homeTeam?.toString() ?? "0";
+    String awayScore = score?.fullTime.awayTeam?.toString() ?? "0";
+    String hHalfScore = score?.halfTime.homeTeam?.toString()?? "0";
+    String aHalfScore = score?.halfTime.awayTeam?.toString()?? "0";
+    String hExtraScore = score?.extraTime.homeTeam?.toString()?? "0";
+    String aExtraScore = score?.extraTime.awayTeam?.toString()?? "0";
+    String hPenalities = score?.penalties.homeTeam?.toString()?? "0";
+    String aPenalities = score?.penalties.awayTeam?.toString()?? "0";
+    String leagueName = widget.matches?.competition.name.toString() ?? "League";
+
+    var seasonStartYr = widget.matches!.season.startDate.year.toString();
+    var seasonEndYr = widget.matches!.season.endDate.year.toString();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:  const Color(0xFF6E62FF),
+        backgroundColor: const Color(0xFF6E62FF),
         title: Text(
-          widget.matches.competition.name+" League",
+          leagueName+" League",
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.white,
@@ -63,11 +68,11 @@ class _ScorecardState extends State<Scorecard> {
                   child: Column(
                     children: [
                       Text(
-                        "Season : "+widget.matches.season.startDate.year.toString()+" - "+widget.matches.season.endDate.year.toString(),
+                        "Season : "+seasonStartYr+" - "+seasonEndYr,
                         style: const TextStyle(color: Colors.white),
                       ),
 
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Container(
@@ -83,15 +88,15 @@ class _ScorecardState extends State<Scorecard> {
                           ),
                         ),
                         child: Text(
-                            DateFormat("dd-MM-yyyy").format((widget.matches.utcDate)),
+                            DateFormat("dd-MM-yyyy").format((widget.matches!.utcDate)),
                           style: const TextStyle(color: Colors.white),
                         ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TeamName(_size.width * 0.30, widget.matches.homeTeam, "Home"),
-                          Container(
+                          TeamDetails(_size.width * 0.30, widget.matches!.homeTeam, "Home"),
+                          SizedBox(
                             width: _size.width * 0.2,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,7 +122,7 @@ class _ScorecardState extends State<Scorecard> {
                               ],
                             ),
                           ),
-                          TeamName(_size.width * 0.30, widget.matches.awayTeam,"Away" ),
+                          TeamDetails(_size.width * 0.30, widget.matches!.awayTeam,"Away" ),
                         ],
                       ),
                     ],
@@ -139,8 +144,8 @@ class _ScorecardState extends State<Scorecard> {
                           horizontal: 24,
                         ),
                         child: Row(
-                          children: [
-                            const Expanded(
+                          children: const [
+                            Expanded(
                               child: Center(
                                 child: Text("Winner",style: TextStyle(
                                     fontSize: 20,fontWeight: FontWeight.bold,
@@ -162,7 +167,7 @@ class _ScorecardState extends State<Scorecard> {
                           children: [
                              Expanded(
                               child: Center(
-                                child: Text(winner ,style: TextStyle(
+                                child: Text(winner ,style: const TextStyle(
                                     fontSize: 20,fontWeight: FontWeight.bold,
                                     color: Colors.red)),
                               ),
@@ -181,7 +186,7 @@ class _ScorecardState extends State<Scorecard> {
                         child: Row(
                           children: [
                             Text(
-                              h_halfScore,style: const TextStyle(
+                              hHalfScore,style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
@@ -193,7 +198,7 @@ class _ScorecardState extends State<Scorecard> {
                               ),
                             ),
                             Text(
-                                a_halfScore ,style: const TextStyle(
+                                aHalfScore ,style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
@@ -212,7 +217,7 @@ class _ScorecardState extends State<Scorecard> {
                           key: const Key("extraTime"),
                           children: [
                             Text(
-                                h_extraScore ,style: const TextStyle(
+                                hExtraScore ,style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
@@ -224,7 +229,7 @@ class _ScorecardState extends State<Scorecard> {
                               ),
                             ),
                             Text(
-                                a_extraScore ,style: const TextStyle(
+                                aExtraScore ,style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
@@ -243,7 +248,7 @@ class _ScorecardState extends State<Scorecard> {
                           children: [
                             Text(
 
-                                h_penalities ,style: const TextStyle(
+                                hPenalities ,style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
@@ -255,7 +260,7 @@ class _ScorecardState extends State<Scorecard> {
                               ),
                             ),
                             Text(
-                                a_penalities ,style: const TextStyle(
+                                aPenalities ,style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),

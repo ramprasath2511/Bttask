@@ -11,49 +11,22 @@ String matchToJson(Game data) => json.encode(data.toJson());
 class Game {
   Game({
     required this.count,
-    required this.filters,
     required this.matches,
   });
 
   int count;
-  Filters filters;
   List<MatchElement> matches;
 
   factory Game.fromJson(Map<String, dynamic> json) => Game(
-    count: json["count"],
-    filters: Filters.fromJson(json["filters"]),
-    matches: List<MatchElement>.from(json["matches"].map((x) => MatchElement.fromJson(x))),
-  );
+        count: json["count"],
+        matches: List<MatchElement>.from(
+            json["matches"].map((x) => MatchElement.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "count": count,
-    "filters": filters.toJson(),
-    "matches": List<dynamic>.from(matches.map((x) => x.toJson())),
-  };
-}
-
-class Filters {
-  Filters({
-    required this.dateFrom,
-    required this.dateTo,
-    required this.permission,
-  });
-
-  DateTime dateFrom;
-  DateTime dateTo;
-  String permission;
-
-  factory Filters.fromJson(Map<String, dynamic> json) => Filters(
-    dateFrom: DateTime.parse(json["dateFrom"]),
-    dateTo: DateTime.parse(json["dateTo"]),
-    permission: json["permission"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "dateFrom": "${dateFrom.year.toString().padLeft(4, '0')}-${dateFrom.month.toString().padLeft(2, '0')}-${dateFrom.day.toString().padLeft(2, '0')}",
-    "dateTo": "${dateTo.year.toString().padLeft(4, '0')}-${dateTo.month.toString().padLeft(2, '0')}-${dateTo.day.toString().padLeft(2, '0')}",
-    "permission": permission,
-  };
+        "count": count,
+        "matches": List<dynamic>.from(matches.map((x) => x.toJson())),
+      };
 }
 
 class MatchElement {
@@ -62,62 +35,38 @@ class MatchElement {
     required this.competition,
     required this.season,
     required this.utcDate,
-    required this.status,
-    required this.matchday,
-    required this.stage,
-    this.group,
-    required this.lastUpdated,
     required this.score,
     required this.homeTeam,
     required this.awayTeam,
-
   });
 
   int id;
   Competition competition;
   Season season;
   DateTime utcDate;
-  String status;
-  int matchday;
-  String stage;
-  dynamic group;
-  DateTime lastUpdated;
   Score score;
   Team homeTeam;
   Team awayTeam;
 
-
   factory MatchElement.fromJson(Map<String, dynamic> json) => MatchElement(
-    id: json["id"],
-    competition: Competition.fromJson(json["competition"]),
-    season: Season.fromJson(json["season"]),
-    utcDate: DateTime.parse(json["utcDate"]),
-    status: json["status"],
-    matchday: json["matchday"],
-    stage: json["stage"],
-    group: json["group"],
-    lastUpdated: DateTime.parse(json["lastUpdated"]),
-    score: Score.fromJson(json["score"]),
-    homeTeam: Team.fromJson(json["homeTeam"]),
-    awayTeam: Team.fromJson(json["awayTeam"]),
-
-  );
+        id: json["id"],
+        competition: Competition.fromJson(json["competition"]),
+        season: Season.fromJson(json["season"]),
+        utcDate: DateTime.parse(json["utcDate"]),
+        score: Score.fromJson(json["score"]),
+        homeTeam: Team.fromJson(json["homeTeam"]),
+        awayTeam: Team.fromJson(json["awayTeam"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "competition": competition.toJson(),
-    "season": season.toJson(),
-    "utcDate": utcDate.toIso8601String(),
-    "status": status,
-    "matchday": matchday,
-    "stage": stage,
-    "group": group,
-    "lastUpdated": lastUpdated.toIso8601String(),
-    "score": score.toJson(),
-    "homeTeam": homeTeam.toJson(),
-    "awayTeam": awayTeam.toJson(),
-
-  };
+        "id": id,
+        "competition": competition.toJson(),
+        "season": season.toJson(),
+        "utcDate": utcDate.toIso8601String(),
+        "score": score.toJson(),
+        "homeTeam": homeTeam.toJson(),
+        "awayTeam": awayTeam.toJson(),
+      };
 }
 
 class Team {
@@ -130,14 +79,14 @@ class Team {
   String name;
 
   factory Team.fromJson(Map<String, dynamic> json) => Team(
-    id: json["id"],
-    name: json["name"],
-  );
+        id: json["id"],
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-  };
+        "id": id,
+        "name": name,
+      };
 }
 
 class Competition {
@@ -150,24 +99,19 @@ class Competition {
   String name;
 
   factory Competition.fromJson(Map<String, dynamic> json) => Competition(
-    id: json["id"],
-    name: json["name"],
-  );
+        id: json["id"],
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-  };
+        "id": id,
+        "name": name,
+      };
 }
-
-
-
-
 
 class Score {
   Score({
     this.winner,
-    required this.duration,
     required this.fullTime,
     required this.halfTime,
     required this.extraTime,
@@ -175,29 +119,26 @@ class Score {
   });
 
   dynamic winner;
-  String duration;
   ExtraTime fullTime;
   ExtraTime halfTime;
   ExtraTime extraTime;
   ExtraTime penalties;
 
   factory Score.fromJson(Map<String, dynamic> json) => Score(
-    winner: json["winner"],
-    duration: json["duration"],
-    fullTime: ExtraTime.fromJson(json["fullTime"]),
-    halfTime: ExtraTime.fromJson(json["halfTime"]),
-    extraTime: ExtraTime.fromJson(json["extraTime"]),
-    penalties: ExtraTime.fromJson(json["penalties"]),
-  );
+        winner: json["winner"],
+        fullTime: ExtraTime.fromJson(json["fullTime"]),
+        halfTime: ExtraTime.fromJson(json["halfTime"]),
+        extraTime: ExtraTime.fromJson(json["extraTime"]),
+        penalties: ExtraTime.fromJson(json["penalties"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "winner": winner,
-    "duration": duration,
-    "fullTime": fullTime.toJson(),
-    "halfTime": halfTime.toJson(),
-    "extraTime": extraTime.toJson(),
-    "penalties": penalties.toJson(),
-  };
+        "winner": winner,
+        "fullTime": fullTime.toJson(),
+        "halfTime": halfTime.toJson(),
+        "extraTime": extraTime.toJson(),
+        "penalties": penalties.toJson(),
+      };
 }
 
 class ExtraTime {
@@ -210,14 +151,14 @@ class ExtraTime {
   dynamic awayTeam;
 
   factory ExtraTime.fromJson(Map<String, dynamic> json) => ExtraTime(
-    homeTeam: json["homeTeam"],
-    awayTeam: json["awayTeam"],
-  );
+        homeTeam: json["homeTeam"],
+        awayTeam: json["awayTeam"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "homeTeam": homeTeam,
-    "awayTeam": awayTeam,
-  };
+        "homeTeam": homeTeam,
+        "awayTeam": awayTeam,
+      };
 }
 
 class Season {
@@ -225,35 +166,27 @@ class Season {
     required this.id,
     required this.startDate,
     required this.endDate,
-    required this.currentMatchday,
     this.winner,
   });
 
   int id;
   DateTime startDate;
   DateTime endDate;
-  int currentMatchday;
   dynamic winner;
 
   factory Season.fromJson(Map<String, dynamic> json) => Season(
-    id: json["id"],
-    startDate: DateTime.parse(json["startDate"]),
-    endDate: DateTime.parse(json["endDate"]),
-    currentMatchday: json["currentMatchday"],
-    winner: json["winner"],
-  );
+        id: json["id"],
+        startDate: DateTime.parse(json["startDate"]),
+        endDate: DateTime.parse(json["endDate"]),
+        winner: json["winner"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "startDate": "${startDate.year.toString().padLeft(4, '0')}-${startDate.month.toString().padLeft(2, '0')}-${startDate.day.toString().padLeft(2, '0')}",
-    "endDate": "${endDate.year.toString().padLeft(4, '0')}-${endDate.month.toString().padLeft(2, '0')}-${endDate.day.toString().padLeft(2, '0')}",
-    "currentMatchday": currentMatchday,
-    "winner": winner,
-  };
+        "id": id,
+        "startDate":
+            "${startDate.year.toString().padLeft(4, '0')}-${startDate.month.toString().padLeft(2, '0')}-${startDate.day.toString().padLeft(2, '0')}",
+        "endDate":
+            "${endDate.year.toString().padLeft(4, '0')}-${endDate.month.toString().padLeft(2, '0')}-${endDate.day.toString().padLeft(2, '0')}",
+        "winner": winner,
+      };
 }
-
-
-
-
-
-
