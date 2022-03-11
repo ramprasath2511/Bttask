@@ -1,9 +1,10 @@
-import 'package:bttask/Bloc/match_bloc.dart';
+
+import 'package:bttask/Bloc/matches_bloc.dart';
 import 'package:bttask/Model/match.dart';
-import 'package:bttask/common/transparent.dart';
+import 'package:bttask/common/backgroundscreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'detailed_page.dart';
 
 class MatchListScreen extends StatefulWidget {
@@ -14,12 +15,11 @@ class MatchListScreen extends StatefulWidget {
 }
 
 class _MatchListScreenState extends State<MatchListScreen> {
-  final bloc = MatchBloc();
+
 
   @override
   void initState() {
-    //refreshController = RefreshController();
-    bloc.eventSink.add(Operations.fetch);
+    BlocProvider.of<MatchesBloc>(context).add(Fetch());
     super.initState();
   }
 
@@ -30,13 +30,13 @@ class _MatchListScreenState extends State<MatchListScreen> {
       body: Stack(
         children: [
           //background
-          TransparentBackground(),
+          const BackgroundScreen(),
           //main column contains top header and list
           Column(
             children: [
               //top header container
               ClipRRect(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(24),
                   bottomRight: Radius.circular(24),
                 ),
@@ -60,40 +60,48 @@ class _MatchListScreenState extends State<MatchListScreen> {
                           color: Color(0xFF6E62FF).withOpacity(0.3),
                         ),
                       ),
-                      Container(
-                        child: Center(
-                          child: Text("Campionship league",style: TextStyle(
+                      BlocBuilder<MatchesBloc, MatchesState>(
+  builder: (context, state) {
+    return Container(
+                        child:  Center(
+                          child: Text(state.matchElements.matches[0].competition.name,style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 25,
                           ),),
                         ),
-                      ),
+                      );
+  },
+),
                     ],
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: Row(
+                child: BlocBuilder<MatchesBloc, MatchesState>(
+  builder: (context, state) {
+    return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
+                  children:  [
                     Text("Season:"),
-                    Text("2012"),
+                    // Text(state.matchElements.matches[0].season.startDate.year.toString()+" - "+state.matchElements.matches[0].season.endDate.year.toString()),
                     // dropdownColor:,
                   ],
-                ),
+                );
+  },
+),
               ),
               Expanded(
-                child: StreamBuilder<List<MatchElement>>(
-                    stream: bloc.counterStream,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
+                child: BlocBuilder<MatchesBloc, MatchesState>(
+                    builder: (context, state) {
+                      if (state.matchElements!=null) {
                         return ListView.builder(
-                          itemCount: snapshot.data?.length,
+                          itemCount: state.matchElements.matches.length,
                           itemBuilder: (context, i) {
-                            MatchElement matches = snapshot.data![i] as MatchElement;
+                            MatchElement matches = state.matchElements.matches[i];
                             return InkWell(
+                              key: const Key("lists"),
                               onTap: () {
                                 Navigator.of(context).push(
                                     MaterialPageRoute(
@@ -104,8 +112,8 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                 margin: const EdgeInsets.all(10),
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                  color: Color(0xFF6E62FF).withOpacity(0.8),
-                                  borderRadius: BorderRadius.all(
+                                  color: const Color(0xFF6E62FF).withOpacity(0.8),
+                                  borderRadius: const BorderRadius.all(
                                     Radius.circular(24),
                                   ),
                                 ),
@@ -117,7 +125,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                       child: Text(
                                         matches.homeTeam.name,
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,
@@ -128,7 +136,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                       child: Text(
                                         matches.score.fullTime.homeTeam.toString() +" - "+ matches.score.fullTime.awayTeam.toString(),
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
@@ -139,7 +147,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                       child: Text(
                                         matches.awayTeam.name,
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,

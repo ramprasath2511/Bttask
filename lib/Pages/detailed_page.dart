@@ -1,6 +1,6 @@
 import 'package:bttask/Model/match.dart';
 import 'package:bttask/common/team.dart';
-import 'package:bttask/common/transparent.dart';
+import 'package:bttask/common/backgroundscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -9,36 +9,30 @@ class Scorecard extends StatefulWidget {
   final MatchElement matches;
 
   const Scorecard({Key? key, required this.matches}) : super(key: key);
-
-
-
-
   @override
   _ScorecardState createState() => _ScorecardState();
 }
 
 class _ScorecardState extends State<Scorecard> {
 
-
-
   @override
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:  Color(0xFF6E62FF),
-        title: Text("Scorecard"),
+        backgroundColor:  const Color(0xFF6E62FF),
+        title: const Text("Scorecard"),
         centerTitle: true,
         elevation: 0,
       ),
       body: Stack(
         children: [
-          const TransparentBackground(),
+          const BackgroundScreen(),
           Column(
             children: [
               //top header
               ClipRRect(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(24),
                   bottomRight: Radius.circular(24),
                 ),
@@ -46,7 +40,7 @@ class _ScorecardState extends State<Scorecard> {
                   padding: const EdgeInsets.all(16),
                   // height: _size.height * 0.2,
                   width: double.infinity,
-                  color: Color(0xFF6E62FF),
+                  color: const Color(0xFF6E62FF),
                   child: Column(
                     children: [
                       Container(
@@ -57,19 +51,19 @@ class _ScorecardState extends State<Scorecard> {
                         decoration: BoxDecoration(
                           color: Colors.transparent,
                           border: Border.all(color: Colors.white),
-                          borderRadius: BorderRadius.all(
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(12),
                           ),
                         ),
                         child: Text(
                             DateFormat("dd-MM-yyyy").format((widget.matches.utcDate)),
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TeamLogoName(_size.width * 0.30, widget.matches.homeTeam, "Home"),
+                          TeamName(_size.width * 0.30, widget.matches.homeTeam, "Home"),
                           Container(
                             width: _size.width * 0.2,
                             child: Row(
@@ -77,11 +71,11 @@ class _ScorecardState extends State<Scorecard> {
                               children: [
                                 Text(
                                   widget.matches.score.fullTime.homeTeam.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 50,
                                       color: Colors.white),
                                 ),
-                                Text(
+                                const Text(
                                   "-",
                                   style: TextStyle(
                                       fontSize: 50,
@@ -89,14 +83,14 @@ class _ScorecardState extends State<Scorecard> {
                                 ),
                                 Text(
                                   widget.matches.score.fullTime.awayTeam.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 50,
                                       color: Colors.white),
                                 ),
                               ],
                             ),
                           ),
-                          TeamLogoName(_size.width * 0.30, widget.matches.awayTeam,"Away" ),
+                          TeamName(_size.width * 0.30, widget.matches.awayTeam,"Away" ),
                         ],
                       ),
                     ],
@@ -120,11 +114,11 @@ class _ScorecardState extends State<Scorecard> {
                         child: Row(
                           children: [
                             Text(
-                              widget.matches.score.halfTime.homeTeam.toString(),style: TextStyle(
+                              widget.matches.score.halfTime.homeTeam.toString(),style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
-                            Expanded(
+                            const Expanded(
                               child: Center(
                                 child: Text("Half-time",style: TextStyle(
                                     fontSize: 18,fontWeight: FontWeight.bold,
@@ -132,7 +126,7 @@ class _ScorecardState extends State<Scorecard> {
                               ),
                             ),
                             Text(
-                                widget.matches.score.halfTime.awayTeam.toString(),style: TextStyle(
+                                widget.matches.score.halfTime.awayTeam.toString(),style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
@@ -148,13 +142,14 @@ class _ScorecardState extends State<Scorecard> {
                           horizontal: 24,
                         ),
                         child: Row(
+                          key: const Key("extraTime"),
                           children: [
                             Text(
-                                widget.matches.score.extraTime.homeTeam ?? "0",style: TextStyle(
+                                widget.matches.score.extraTime.homeTeam ?? "0",style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
-                            Expanded(
+                            const Expanded(
                               child: Center(
                                 child: Text("Extra-time",style: TextStyle(
                                     fontSize: 18,fontWeight: FontWeight.bold,
@@ -162,7 +157,7 @@ class _ScorecardState extends State<Scorecard> {
                               ),
                             ),
                             Text(
-                                widget.matches.score.extraTime.awayTeam ?? "0",style: TextStyle(
+                                widget.matches.score.extraTime.awayTeam ?? "0",style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
@@ -180,11 +175,12 @@ class _ScorecardState extends State<Scorecard> {
                         child: Row(
                           children: [
                             Text(
-                                widget.matches.score.penalties.homeTeam ?? "0",style: TextStyle(
+
+                                widget.matches.score.penalties.homeTeam ?? "0",style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
-                            Expanded(
+                            const Expanded(
                               child: Center(
                                 child: Text("Penalties",style: TextStyle(
                                     fontSize: 18,fontWeight: FontWeight.bold,
@@ -192,7 +188,7 @@ class _ScorecardState extends State<Scorecard> {
                               ),
                             ),
                             Text(
-                                widget.matches.score.penalties.awayTeam ?? "0",style: TextStyle(
+                                widget.matches.score.penalties.awayTeam ?? "0",style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),

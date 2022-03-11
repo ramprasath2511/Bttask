@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 
-class TransparentBackground extends StatelessWidget {
-  const TransparentBackground({ key}) : super(key: key);
+class BackgroundScreen extends StatelessWidget {
+  const BackgroundScreen({ key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

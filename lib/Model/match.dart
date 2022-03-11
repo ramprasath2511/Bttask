@@ -4,12 +4,12 @@
 
 import 'dart:convert';
 
-Match matchFromJson(String str) => Match.fromJson(json.decode(str));
+Game matchFromJson(String str) => Game.fromJson(json.decode(str));
 
-String matchToJson(Match data) => json.encode(data.toJson());
+String matchToJson(Game data) => json.encode(data.toJson());
 
-class Match {
-  Match({
+class Game {
+  Game({
     required this.count,
     required this.filters,
     required this.matches,
@@ -19,7 +19,7 @@ class Match {
   Filters filters;
   List<MatchElement> matches;
 
-  factory Match.fromJson(Map<String, dynamic> json) => Match(
+  factory Game.fromJson(Map<String, dynamic> json) => Game(
     count: json["count"],
     filters: Filters.fromJson(json["filters"]),
     matches: List<MatchElement>.from(json["matches"].map((x) => MatchElement.fromJson(x))),

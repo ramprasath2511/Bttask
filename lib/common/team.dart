@@ -2,14 +2,14 @@
 import 'package:bttask/Model/match.dart';
 import 'package:flutter/material.dart';
 
-class TeamLogoName extends StatelessWidget {
+class TeamName extends StatelessWidget {
 
   final double width;
 
 final Team team;
 final String teamtype;
 
-  TeamLogoName(this.width, this.team, this.teamtype);
+  TeamName(this.width, this.team, this.teamtype);
 
   @override
   Widget build(BuildContext context) {
