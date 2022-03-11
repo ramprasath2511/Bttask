@@ -78,10 +78,14 @@ class _MatchListScreenState extends State<MatchListScreen> {
                 child: BlocBuilder<MatchesBloc, MatchesState>(
                     builder: (context, state) {
                       if (state.matchElements!=null) {
+
                         return ListView.builder(
                           itemCount: state.matchElements.matches.length,
                           itemBuilder: (context, i) {
                             MatchElement matches = state.matchElements.matches[i];
+                           String? homeScore= matches.score.fullTime.homeTeam ?? "0";
+                            String? awayScore= matches.score.fullTime.awayTeam ?? "0";
+
                             return InkWell(
                               key: const Key("lists"),
                               onTap: () {
@@ -214,7 +218,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                         child: Column(
                                           children: [
                                             Text(
-                                        matches.score.fullTime.homeTeam ?? "0" +" - "+ matches.score.fullTime.awayTeam.toString(),
+                                              homeScore! +" - "+ awayScore!,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                           color: Colors.white,
