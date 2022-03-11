@@ -21,7 +21,15 @@ class _ScorecardState extends State<Scorecard> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor:  const Color(0xFF6E62FF),
-        title: const Text("Scorecard"),
+        title: Text(
+          widget.matches.competition.name+" League",
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
         centerTitle: true,
         elevation: 0,
       ),
@@ -37,12 +45,20 @@ class _ScorecardState extends State<Scorecard> {
                   bottomRight: Radius.circular(24),
                 ),
                 child: Container(
-                  padding: const EdgeInsets.all(16),
-                  // height: _size.height * 0.2,
+                  padding: const EdgeInsets.all(12),
+                   //height: _size.height * 0.2,
                   width: double.infinity,
                   color: const Color(0xFF6E62FF),
                   child: Column(
                     children: [
+                      Text(
+                        "Season : "+widget.matches.season.startDate.year.toString()+" - "+widget.matches.season.endDate.year.toString(),
+                        style: const TextStyle(color: Colors.white),
+                      ),
+
+                      SizedBox(
+                        height: 5,
+                      ),
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 6,
@@ -70,7 +86,7 @@ class _ScorecardState extends State<Scorecard> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  widget.matches.score.fullTime.homeTeam.toString(),
+                                  widget.matches.score.fullTime.homeTeam ?? "0",
                                   style: const TextStyle(
                                       fontSize: 50,
                                       color: Colors.white),
@@ -82,7 +98,7 @@ class _ScorecardState extends State<Scorecard> {
                                       color: Colors.white),
                                 ),
                                 Text(
-                                  widget.matches.score.fullTime.awayTeam.toString(),
+                                  widget.matches.score.fullTime.awayTeam ?? "0",
                                   style: const TextStyle(
                                       fontSize: 50,
                                       color: Colors.white),
@@ -113,8 +129,48 @@ class _ScorecardState extends State<Scorecard> {
                         ),
                         child: Row(
                           children: [
+                            const Expanded(
+                              child: Center(
+                                child: Text("Winner",style: TextStyle(
+                                    fontSize: 20,fontWeight: FontWeight.bold,
+                                    color: Colors.green)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 10,
+                        ),
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                        ),
+                        child: Row(
+                          children: [
+                             Expanded(
+                              child: Center(
+                                child: Text(widget.matches.score.winner.toString(),style: TextStyle(
+                                    fontSize: 20,fontWeight: FontWeight.bold,
+                                    color: Colors.red)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 10,
+                        ),
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                        ),
+                        child: Row(
+                          children: [
                             Text(
-                              widget.matches.score.halfTime.homeTeam.toString(),style: const TextStyle(
+                              widget.matches.score.halfTime.homeTeam ?? "0",style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),
@@ -126,7 +182,7 @@ class _ScorecardState extends State<Scorecard> {
                               ),
                             ),
                             Text(
-                                widget.matches.score.halfTime.awayTeam.toString(),style: const TextStyle(
+                                widget.matches.score.halfTime.awayTeam  ?? "0",style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black)
                             ),

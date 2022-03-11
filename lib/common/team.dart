@@ -26,9 +26,18 @@ final String teamtype;
               color: Colors.white,
             ),
           ),
-          SizedBox(height: 16),
-          Image.asset("Images/teamgame.gif"),
-          SizedBox(height: 16),
+          SizedBox(height: 12),
+          Container(
+            height: 80.0,
+            width: 60.0,
+    decoration: BoxDecoration(
+    image: DecorationImage(
+    image: AssetImage("Images/teamgame.gif"),
+      fit: BoxFit.fill,
+      ),
+    ),
+          ),
+          SizedBox(height: 12),
           Text(
                team.name,
             textAlign: TextAlign.center,

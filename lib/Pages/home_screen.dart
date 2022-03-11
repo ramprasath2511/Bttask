@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'detailed_page.dart';
+import 'package:intl/intl.dart';
 
 class MatchListScreen extends StatefulWidget {
   const MatchListScreen({Key? key}) : super(key: key);
@@ -60,37 +61,18 @@ class _MatchListScreenState extends State<MatchListScreen> {
                           color: Color(0xFF6E62FF).withOpacity(0.3),
                         ),
                       ),
-                      BlocBuilder<MatchesBloc, MatchesState>(
-  builder: (context, state) {
-    return Container(
-                        child:  Center(
-                          child: Text(state.matchElements.matches[0].competition.name,style: const TextStyle(
+                      Container(
+                        child:  const Center(
+                          child: Text("FootBall Matches",style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 25,
                           ),),
                         ),
-                      );
-  },
-),
-                    ],
+                      ),
+                   ],
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: BlocBuilder<MatchesBloc, MatchesState>(
-  builder: (context, state) {
-    return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children:  [
-                    Text("Season:"),
-                    // Text(state.matchElements.matches[0].season.startDate.year.toString()+" - "+state.matchElements.matches[0].season.endDate.year.toString()),
-                    // dropdownColor:,
-                  ],
-                );
-  },
-),
               ),
               Expanded(
                 child: BlocBuilder<MatchesBloc, MatchesState>(
@@ -108,7 +90,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                         builder: (builder) => Scorecard(matches:matches)));
                               },
                               child: Container(
-                                height: 70,
+                                height: 110,
                                 margin: const EdgeInsets.all(10),
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
@@ -117,7 +99,91 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                     Radius.circular(24),
                                   ),
                                 ),
-                                child: Row(
+                                child:Column( children: [
+
+                                  Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                width: 20,
+                                              ),
+                                              Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 3,
+                                              vertical: 1,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: Colors.red,
+                                              border: Border.all(color: Colors.red),
+                                              borderRadius: const BorderRadius.all(
+                                                Radius.circular(3),
+                                              ),
+                                            ),
+                                            child:Text(
+                                             "Live",
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                        ),
+                                ]
+                                          ),
+                                        ),
+
+                                        Expanded(child:Column(
+                                          children: [
+
+                                            Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 6,
+                                            vertical: 2,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            border: Border.all(color: Colors.white),
+                                            borderRadius: const BorderRadius.all(
+                                              Radius.circular(12),
+                                            ),
+                                          ),
+                                          child: Text(
+                                            DateFormat("hh:mm").format((matches.utcDate)),
+                                            style: const TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                            ]
+                                        ),
+                                        ),
+                                        Expanded(child:Column(
+                                          children: [
+                                        Text(
+                                          DateFormat("dd-MM-yyyy").format((matches.utcDate)),
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            color: Colors.lightGreenAccent,
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                        ]
+                                        )
+                                        ),
+
+                                      ]
+
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
@@ -133,8 +199,22 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                       ),
                                     ),
                                     Expanded(
-                                      child: Text(
-                                        matches.score.fullTime.homeTeam.toString() +" - "+ matches.score.fullTime.awayTeam.toString(),
+                                      child:Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 4,
+                                          vertical: 2,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          border: Border.all(color: Colors.green),
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(8),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                        matches.score.fullTime.homeTeam ?? "0" +" - "+ matches.score.fullTime.awayTeam.toString(),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                           color: Colors.white,
@@ -142,6 +222,35 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
+// SizedBox(
+//   height: 3,
+// ),
+//
+//                                         Container(
+//                                             padding: const EdgeInsets.symmetric(
+//                                               horizontal: 3,
+//                                               vertical: 1,
+//                                             ),
+//                                             decoration: BoxDecoration(
+//                                               color: Colors.red,
+//                                               border: Border.all(color: Colors.red),
+//                                               borderRadius: const BorderRadius.all(
+//                                                 Radius.circular(3),
+//                                               ),
+//                                             ),
+//                                             child:Text(
+//                                              "Live",
+//                                               textAlign: TextAlign.center,
+//                                               style: const TextStyle(
+//                                                 color: Colors.white,
+//                                                 fontSize: 14,
+//                                                 fontWeight: FontWeight.w400,
+//                                               ),
+//                                             ),
+//                                         ),
+                                      ]
+                                        )
+                                    ),
                                     ),
                                     Expanded(
                                       child: Text(
@@ -155,7 +264,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                       ),
                                     ),
                                   ],
-                                ),
+                                ),]),
                               ),
                             );
                           },
