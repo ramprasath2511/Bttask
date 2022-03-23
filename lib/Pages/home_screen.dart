@@ -65,8 +65,8 @@ class _MatchListScreenState extends State<MatchListScreen> {
                         ),
                       ),
                       Positioned(
-                        height: 270,
-                        left: 25,
+                        height: _size.height * 0.39,
+                        left: _size.height * 0.03,
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,8 +99,8 @@ class _MatchListScreenState extends State<MatchListScreen> {
                             ]),
                       ),
                       Positioned(
-                        height: 270,
-                        right: 25,
+                        height: _size.height * 0.39,
+                        right: _size.height * 0.03,
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -158,7 +158,7 @@ class _MatchListScreenState extends State<MatchListScreen> {
                                     Scorecard(matches: matches)));
                           },
                           child: Container(
-                            height: 110,
+                            height: _size.height * 0.15,
                             margin: const EdgeInsets.all(10),
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
