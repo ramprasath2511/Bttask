@@ -20,7 +20,6 @@ class _MatchListScreenState extends State<MatchListScreen> {
     BlocProvider.of<MatchesBloc>(context).add(const Fetch("current"));
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;

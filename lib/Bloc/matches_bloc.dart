@@ -12,7 +12,7 @@ part 'matches_state.dart';
 class MatchesBloc extends Bloc<MatchesEvent, MatchesState> {
   Game? matches;
 
-  MatchesBloc(MatchesState initialState) : super(initialState);
+ MatchesBloc(MatchesState initialState) : super(initialState);
 
   @override
   Stream<MatchesState> mapEventToState(
